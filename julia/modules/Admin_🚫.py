@@ -628,7 +628,7 @@ async def _(event):
             logger.warn("sleeping for {} seconds".format(ex.seconds))
             sleep(ex.seconds)
         except Exception as ex:
-            await event.reply(str(ex))
+            await done.edit(str(ex))
         else:
             p += 1
 
@@ -636,7 +636,7 @@ async def _(event):
         await done.edit("No one is banned in this chat")
         return
     required_string = "Successfully unbanned **{}** users"
-    await event.reply(required_string.format(p))
+    await done.edit(required_string.format(p))
 
 
 @register(pattern="^/unmuteall$")
@@ -672,7 +672,7 @@ async def _(event):
             logger.warn("sleeping for {} seconds".format(ex.seconds))
             sleep(ex.seconds)
         except Exception as ex:
-            await event.reply(str(ex))
+            await done.edit(str(ex))
         else:
             p += 1
 
@@ -680,7 +680,7 @@ async def _(event):
         await done.edit("No one is muted in this chat")
         return
     required_string = "Successfully unmuted **{}** users"
-    await event.reply(required_string.format(p))
+    await done.edit(required_string.format(p))
 
 
 @register(pattern="^/ban(?: |$)(.*)")
