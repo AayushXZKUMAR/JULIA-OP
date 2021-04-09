@@ -577,17 +577,13 @@ async def _(event):
     done = await event.reply("Working ...")
     async for i in tbot.iter_participants(event.chat_id):
 
-        if isinstance(i.status, UserStatusLastMonth):
-            status = await tbot(EditBannedRequest(event.chat_id, i, KICK_RIGHTS))
-            if not status:
-                return
-            c = c + 1
-
-        if isinstance(i.status, UserStatusLastWeek):
-            status = await tbot(EditBannedRequest(event.chat_id, i, KICK_RIGHTS))
-            if not status:
-                return
-            c = c + 1
+        if not isinstance(i.status, UserStatusRecently) and not i.bot:
+            try:
+              status = await tbot(EditBannedRequest(event.chat_id, i, KICK_RIGHTS))
+            except Exception as e:       
+              await done.edit(e)
+              return
+            c = c + 1       
 
     if c == 0:
         await done.edit("Got no one to kick 😔")
