@@ -594,7 +594,7 @@ async def _(event):
         return
 
     required_string = "Successfully Kicked **{}** users"
-    await event.reply(required_string.format(c))
+    await done.edit(required_string.format(c))
 
 
 @register(pattern="^/unbanall$")
