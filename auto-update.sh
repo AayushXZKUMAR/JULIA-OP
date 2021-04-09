@@ -21,21 +21,22 @@
 # If you are using this script in your project please don't remove these few lines, if you respect the creator.
 
 
-# **Tip: you can run it in a different worker so that, it can be run independently of the main program
-# Thus you can switch it on/off whenever you want.
-
-
 # we first fetch the environment variables
 geturl="${SOURCE_URL}"
 authkey="${HEROKU_API_KEY}"
 appname="${HEROKU_APP_NAME}"
 reqpath='requirements.txt' # change if necessary
+should_update="${AUTO_UPDATE_DEPS}" # < bool: true/false >
 
-# while loop
-while true; do
 
- # Read the dependencies
- while IFS= read -r line; do
+# Give users their own choice
+if $should_update; then
+
+ # while loop
+ while true; do
+
+  # Read the dependencies
+  while IFS= read -r line; do
 
    # Fetch all the outdated dependencies
    outdated=$(pip --disable-pip-version-check list --outdated)
@@ -63,9 +64,17 @@ while true; do
       fi     
 
    fi
+  
+  done < $reqpath
 
- done < $reqpath
+ # You can increase/decrease the time if you want
+ sleep 60 
 
-sleep 60 
+ done
 
-done
+else
+
+ # do nothing (pass)
+ :
+
+fi
