@@ -97,9 +97,9 @@
       "required": false
     },
     "HEROKU_API_KEY": {
-      "description": "Required for auto-update.py, get it from https://dashboard.heroku.com/account",
+      "description": "only use this if you have AUTO_UPDATE_DEPS set to true, get it from https://dashboard.heroku.com/account",
       "value": "",
-      "required": true
+      "required": false
     },
     "HEROKU_APP_NAME": {
       "description": "Name of the heroku application (without any changes)",
@@ -107,8 +107,13 @@
       "required": true
     },
     "SOURCE_URL": {
-      "description": "Your github .tar archive link in the format https://api.github.com/repos/<owner>/<repo>/tarball/<branchname>",
+      "description": "Your github .tar archive link in the format https://api.github.com/repos/<owner>/<repo>/tarball/<branchname>, only use this if you have AUTO_UPDATE_DEPS set to true",
       "value": "",
+      "required": false
+    },
+    "AUTO_UPDATE_DEPS": {
+      "description": "Set this to true if you want to automatically update your python dependencies, else set to false",
+      "value": "true",
       "required": true
     },
     "WEBSITE_URL": {
