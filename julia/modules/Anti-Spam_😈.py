@@ -216,7 +216,7 @@ async def _(event):
         return
 
     if sql.is_enabled(event.chat_id):
-        fst_word = event.text.strip().split(None, 1)[0]
+        fst_word = str(event.message).strip().split(None, 1)[0]
         command = fst_word[1:].split("@")
         if len(fst_word) > 1 and any(
             fst_word.startswith(start) for start in CMD_STARTERS
