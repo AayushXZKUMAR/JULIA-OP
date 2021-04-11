@@ -18,10 +18,7 @@ var express = require('express'); //importing express
 
 var http = require('http'); //importing http
 
-// Required for storing ip address 
-var Redis = require('ioredis'); //importing redis
-
-var redisClient = new Redis({ enableOfflineQueue: false });
+var Ddos = require('ddos') //importing ddos
 
 var app = express();
 
@@ -43,42 +40,11 @@ app.listen(port, function() {
 
 });
 
+// This limits a user to make only 2 requests per second
+// And for 3 times
+var ddos = new Ddos({burst:2, limit:3})
 
-// Function for anti-ddos 
-// Function consumes 1 point by IP for every request to an application
-// This limits a user to make only 4 requests per second
-
-var rateLimiterRedis = new RateLimiterRedis({
-
-  storeClient: redisClient,
-
-  points: 4, // Number of requests
-
-  duration: 1, // Per second
-
-});
-
-var rateLimiterMiddleware = (req, res, next) => {
-
-   rateLimiterRedis.consume(req.ip)
-
-      .then(() => {
-
-          next();
- 
-     })
-
-      .catch(_ => {
-
-          res.status(429).send('Too Many Requests');
-
-      });
-
-   };
-
-app.use(rateLimiterMiddleware);
-
-// ends 
+app.use(ddos.express);
 
 
 // Function to prevent heroku dynos from idling
