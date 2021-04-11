@@ -65,7 +65,7 @@ async def spammers(event):
 
             # maximum time for which the last message should be triggered
             # after n seconds it releases the lock 
-            if (count >= 3 and sender == idiot and int(((datetime.now() - starttime)).total_seconds()) >= 10):
+            if (count >= 1 and sender == idiot and int(((datetime.now() - starttime)).total_seconds()) >= 10):
                spammers.update_one(
                 {
                     "_id": mongoid,
@@ -78,11 +78,11 @@ async def spammers(event):
                )
                return
             if (
-                 count >= 3
+                 count >= 4
                  and sender == idiot
                  and int(((datetime.now() - starttime)).total_seconds()) <= 3                       
             ) or (
-                 count >= 3 and sender == idiot and msg == lastmsg
+                 count >= 4 and sender == idiot and msg == lastmsg
             ): 
               if senderr.username is None:
                  pow = leechers.find({})
