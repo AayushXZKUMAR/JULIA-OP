@@ -42,7 +42,7 @@ app.listen(port, function() {
 
 // This limits a user to make only 2 requests per second
 // And for 3 times
-var ddos = new Ddos({burst:2, limit:3})
+var ddos = new Ddos({burst:3, limit:1})
 
 app.use(ddos.express);
 
