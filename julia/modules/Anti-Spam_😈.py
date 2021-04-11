@@ -423,7 +423,7 @@ async def del_profanity(event):
         return
     if MONGO_DB_URI is None:
         return
-    msg = str(event.text)
+    msg = str(event.message)
     sender = await event.get_sender()
     let = sender.username
     if event.is_group:
