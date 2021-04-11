@@ -41,7 +41,7 @@ async def spammers(event):
         return
     sender = event.sender_id
     senderr = await event.get_sender()
-    msg = str(event.message)
+    msg = str(event.message.message)
     if not msg.startswith("/"):
        return
 
