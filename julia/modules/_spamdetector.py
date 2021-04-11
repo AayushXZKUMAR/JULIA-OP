@@ -21,6 +21,8 @@ from telethon import events, types
 from datetime import datetime, timedelta
 import asyncio
 
+# Made by @MissJulia_Robot
+
 
 def get_time(id):
     client = MongoClient(MONGO_DB_URI)
@@ -60,6 +62,21 @@ async def spammers(event):
             count = to_check["count"]
             lastmsg = to_check["lastmsg"]   
             expiry = endtime + timedelta(days=1)
+
+            # maximum time for which the last message should be triggered
+            # after n seconds it releases the lock 
+            if (count >= 3 and sender == idiot and int(((datetime.now() - starttime)).total_seconds()) >= 10):
+               spammers.update_one(
+                {
+                    "_id": mongoid,
+                    "id": idiot,
+                    "stime": starttime,
+                    "count": count,
+                    "lastmsg": lastmsg, 
+                },
+                {"$set": {"count": 1, "stime": datetime.now(), "lastmsg": msg}},          
+               )
+               return
             if (
                  count >= 3
                  and sender == idiot
