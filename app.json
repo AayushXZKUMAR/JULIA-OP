@@ -118,7 +118,7 @@
     },
     "WEBSITE_URL": {
       "description": "The website which will be shown on opening your heroku app",
-      "value": "www.google.com",
+      "value": "https://www.google.com",
       "required": true
     },
     "MONGO_DB_URI": {
