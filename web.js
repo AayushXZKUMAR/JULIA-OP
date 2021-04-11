@@ -18,7 +18,7 @@ var express = require('express'); //importing express
 
 var http = require('http'); //importing http
 
-var Ddos = require('ddos') //importing ddos
+var Ddos = require('ddos'); //importing ddos
 
 var app = express();
 
