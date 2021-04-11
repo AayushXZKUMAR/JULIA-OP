@@ -61,7 +61,7 @@ async def spammers(event):
             starttime = to_check["stime"]
             count = to_check["count"]
             lastmsg = to_check["lastmsg"]   
-            expiry = endtime + timedelta(days=1)
+            expiry = datetime.now() + timedelta(days=1)
 
             # maximum time for which the last message should be triggered
             # after n seconds it releases the lock 
