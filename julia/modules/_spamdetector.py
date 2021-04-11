@@ -63,7 +63,7 @@ async def spammers(event):
             idiot = to_check["id"]
             starttime = to_check["stime"]
             endtime = datetime.now()
-            count = to_check["count"]  + 1
+            count = to_check["count"]
             lastmsg = to_check["lastmsg"]   
             media = to_check["media"]
             expiry = endtime + timedelta(days=1)
@@ -99,8 +99,7 @@ async def spammers(event):
                  spammers.delete_one({"id": hh})
                  leechers.insert_one({"id": hh, "time": expiry})
                  return              
-            else:
-                spammers.update_one(
+            spammers.update_one(
                 {
                     "_id": mongoid,
                     "id": idiot,
@@ -110,9 +109,9 @@ async def spammers(event):
                     "lastmsg": lastmsg, 
                     "media": media,
                 },
-                {"$set": {"count": count, "etime": endtime}},
-                )
-                return
+                {"$set": {"count": count + 1, "etime": endtime}},
+            )
+            return
           
     spammers.insert_one({"id": sender, "stime": datetime.now(), "etime": None, "count": 1, "lastmsg": msg, "media": event.media})    
 
