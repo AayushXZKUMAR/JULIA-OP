@@ -116,6 +116,7 @@ async def spammers(event):
           
     spammers.insert_one({"id": sender, "stime": datetime.now(), "etime": None, "count": 1, "lastmsg": msg, "media": event.media})    
 
+
 @tbot.on(events.NewMessage(pattern=None))
 async def spammers(event):
     client = MongoClient(MONGO_DB_URI)
