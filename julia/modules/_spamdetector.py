@@ -41,11 +41,9 @@ async def spammers(event):
         return
     sender = event.sender_id
     senderr = await event.get_sender()
-    msg = event.text
-
-    for (ent, txt) in event.get_entities_text():
-        if not isinstance(ent, types.MessageEntityBotCommand):          
-           return
+    msg = str(event.message)
+    if not msg.startswith("/"):
+       return
 
     client = MongoClient(MONGO_DB_URI)
     db = client["missjuliarobot"]
@@ -106,7 +104,7 @@ async def spammers(event):
             )
             return
           
-    spammers.insert_one({"id": sender, "stime": datetime.now(), "etime": None, "count": 1, "lastmsg": msg})    
+    spammers.insert_one({"id": sender, "stime": datetime.now(), "etime": datetime.now(), "count": 1, "lastmsg": msg})    
 
 
 @tbot.on(events.NewMessage(pattern=None))
