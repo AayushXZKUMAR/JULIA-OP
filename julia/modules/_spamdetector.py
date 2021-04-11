@@ -15,7 +15,7 @@
 
 
 from julia import tbot
-from datetime import datetime
+import datetime
 from pymongo import MongoClient
 from julia import MONGO_DB_URI, OWNER_ID
 from telethon import events, types
