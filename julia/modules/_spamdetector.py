@@ -114,7 +114,7 @@ async def spammers(event):
                 )
                 return
           
-    spammers.insert_one({"id": sender, "stime": datetime.now(), "etime": None, "count": 1, "lastmsg": msg, "media": None})    
+    spammers.insert_one({"id": sender, "stime": datetime.now(), "etime": None, "count": 1, "lastmsg": msg, "media": event.media})    
 
 @tbot.on(events.NewMessage(pattern=None))
 async def spammers(event):
