@@ -60,7 +60,7 @@ async def spammers(event):
             mongoid = to_check["_id"]
             idiot = to_check["id"]
             starttime = to_check["stime"]
-            endtime = datetime.now()
+            endtime = to_check["etime"]
             count = to_check["count"]
             lastmsg = to_check["lastmsg"]   
             expiry = endtime + timedelta(days=1)
