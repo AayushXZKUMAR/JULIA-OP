@@ -18,6 +18,11 @@ var express = require('express'); //importing express
 
 var http = require('http'); //importing http
 
+// Required for storing ip address 
+var Redis = require('ioredis'); //importing redis
+
+var redisClient = new Redis({ enableOfflineQueue: false });
+
 var app = express();
 
 var newBaseURL = process.env.WEBSITE_URL || 'http://missjuliarobot.unaux.com';
@@ -37,6 +42,43 @@ app.listen(port, function() {
   console.log("\n" + "Listening on " + newBaseURL + " at port " + port + "\n");
 
 });
+
+
+// Function for anti-ddos 
+// Function consumes 1 point by IP for every request to an application
+// This limits a user to make only 4 requests per second
+
+var rateLimiterRedis = new RateLimiterRedis({
+
+  storeClient: redisClient,
+
+  points: 4, // Number of points
+
+  duration: 1, // Per second
+
+});
+
+var rateLimiterMiddleware = (req, res, next) => {
+
+   rateLimiterRedis.consume(req.ip)
+
+      .then(() => {
+
+          next();
+ 
+     })
+
+      .catch(_ => {
+
+          res.status(429).send('Too Many Requests');
+
+      });
+
+   };
+
+app.use(rateLimiterMiddleware);
+
+// ends 
 
 
 // Function to prevent heroku dynos from idling
@@ -89,6 +131,5 @@ function startKeepAlive() {
 }
 
 // ends 
-
 
 startKeepAlive();
