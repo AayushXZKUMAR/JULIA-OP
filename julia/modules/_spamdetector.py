@@ -60,7 +60,7 @@ async def spammers(event):
         if sender == c["id"]:            
             to_check = get_time(id=sender)
             mongoid = to_check["_id"]
-            idiot = to_check("id")
+            idiot = to_check["id"]
             starttime = to_check["stime"]
             endtime = datetime.now()
             count = to_check["count"]  + 1
