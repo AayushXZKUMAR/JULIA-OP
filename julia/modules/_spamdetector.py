@@ -57,16 +57,15 @@ async def spammers(event):
             mongoid = to_check["_id"]
             idiot = to_check["id"]
             starttime = to_check["stime"]
-            endtime = to_check["etime"]
             count = to_check["count"]
             lastmsg = to_check["lastmsg"]   
             expiry = endtime + timedelta(days=1)
             if (
-                 count >= 4
+                 count >= 3
                  and sender == idiot
-                 and int(((endtime - starttime)).total_seconds()) <= 3                            
+                 and int(((datetime.now() - starttime)).total_seconds()) <= 3                       
             ) or (
-                 count >= 4 and sender == idiot and msg == lastmsg
+                 count >= 3 and sender == idiot and msg == lastmsg
             ): 
               if senderr.username is None:
                  pow = leechers.find({})
@@ -97,15 +96,14 @@ async def spammers(event):
                     "_id": mongoid,
                     "id": idiot,
                     "stime": starttime,
-                    "etime": endtime,
                     "count": count,
                     "lastmsg": lastmsg, 
                 },
-                {"$set": {"count": count + 1, "etime": datetime.now()}},
+                {"$set": {"count": count + 1, "stime": datetime.now()}},
             )
             return
           
-    spammers.insert_one({"id": sender, "stime": datetime.now(), "etime": datetime.now(), "count": 1, "lastmsg": msg})    
+    spammers.insert_one({"id": sender, "stime": datetime.now(), "count": 1, "lastmsg": msg})    
 
 
 @tbot.on(events.NewMessage(pattern=None))
