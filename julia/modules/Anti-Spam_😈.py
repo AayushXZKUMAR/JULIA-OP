@@ -216,7 +216,7 @@ async def _(event):
         return
 
     if sql.is_enabled(event.chat_id):
-        fst_word = str(event.text).strip().split(None, 1)[0]
+        fst_word = str(event.message.message).strip().split(None, 1)[0]
         command = fst_word[1:].split("@")
         if len(fst_word) > 1 and any(
             fst_word.startswith(start) for start in CMD_STARTERS
@@ -377,7 +377,7 @@ async def del_profanity(event):
         return
     if MONGO_DB_URI is None:
         return
-    msg = str(event.text)
+    msg = str(event.message.message)
     sender = await event.get_sender()
     let = sender.username
     if event.is_group:
@@ -423,7 +423,7 @@ async def del_profanity(event):
         return
     if MONGO_DB_URI is None:
         return
-    msg = str(event.text)
+    msg = str(event.message.message)
     sender = await event.get_sender()
     let = sender.username
     if event.is_group:
