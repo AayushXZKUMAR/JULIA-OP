@@ -22,7 +22,7 @@ var Ddos = require('ddos'); //importing ddos
 
 var app = express();
 
-var newBaseURL = process.env.WEBSITE_URL || 'http://missjuliarobot.unaux.com';
+var newBaseURL = process.env.WEBSITE_URL || 'www.google.com';
 
 var redirectStatus = parseInt(302);
 
