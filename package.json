@@ -15,10 +15,9 @@
   "license": "AGPL 3.0",
   "dependencies": {
     "express": "4.0.0",
-    "ddos": "0.2.1"
+    "ddos": "0.2.0"
   },
   "engines": {
-    "node": "4.0.0",
-    "npm": "1.4.0"
+    "node": "14.x"
   }
 }
