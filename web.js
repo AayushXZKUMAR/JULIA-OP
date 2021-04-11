@@ -52,7 +52,7 @@ var rateLimiterRedis = new RateLimiterRedis({
 
   storeClient: redisClient,
 
-  points: 4, // Number of points
+  points: 4, // Number of requests
 
   duration: 1, // Per second
 
