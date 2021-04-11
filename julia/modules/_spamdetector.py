@@ -62,11 +62,11 @@ async def spammers(event):
             lastmsg = to_check["lastmsg"]   
             expiry = endtime + timedelta(days=1)
             if (
-                 count > 4
-                 and event.sender_id == idiot
+                 count >= 4
+                 and sender == idiot
                  and int(((endtime - starttime)).total_seconds()) <= 3                            
             ) or (
-                 count > 4 and event.sender_id == idiot and event.text == lastmsg
+                 count >= 4 and sender == idiot and msg == lastmsg
             ): 
               if senderr.username is None:
                  pow = leechers.find({})
@@ -86,6 +86,7 @@ async def spammers(event):
                    if sender == z["id"]:            
                        return
                  st = senderr.username
+                 hh = senderr.id
                  final = f"@{st} you are detected as a spammer according to my algorithms.\nYou will be restricted from using any bot commands for 24 hours !"
                  await tbot.send_message(hh, final)
                  spammers.delete_one({"id": hh})
@@ -100,7 +101,7 @@ async def spammers(event):
                     "count": count,
                     "lastmsg": lastmsg, 
                 },
-                {"$set": {"count": count + 1, "etime": endtime}},
+                {"$set": {"count": count + 1, "etime": datetime.now()}},
             )
             return
           
