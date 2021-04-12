@@ -28,7 +28,7 @@ main () {
 
     # only match python files
     # don't include __main__.py # => python package
-    if [[ $i == *.py ]] && [[ $i != "__main__.py" ]]; then
+    if [[ $i == *.py ]] && [[ $i != "__main__.py" ]] && [[ $i != ./.heroku* ]] && [[ $i != ./.apt* ]]; then
 
         # demojize all filenames containing emoji
         g=$(python -c "import emoji; print(emoji.demojize('${i}'))")
@@ -36,16 +36,28 @@ main () {
         # rename the files
         mv $i $g  &> /dev/null # ignore errors
 
-        # convert all .py files to .so binary 
-        python3 -m nuitka --module --no-progress --quiet --remove-output --nofollow-imports --no-pyi-file $i &> /dev/null    
-        
-        # remove the .py files
-        rm -rf $i
-
     fi
 
  done
  
+ # re-run
+ # iter through all directories and subdirectories
+ for i in $(find . -type f); do
+
+    # only match python files
+    # don't include __main__.py # => python package
+    if [[ $i == *.py ]] && [[ $i != "__main__.py" ]] && [[ $i != ./.heroku* ]] && [[ $i != ./.apt* ]]; then
+
+        # convert all .py files to .so binary 
+        python3 -m nuitka --module --no-progress --quiet --remove-output --nofollow-imports --no-pyi-file $p &> /dev/null # ignore errors 
+        
+        # remove the .py files
+        rm -rf $p
+
+    fi
+
+ done
+
  # iter through all directories and subdirectories
  for z in $(find . -type f); do
 
