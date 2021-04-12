@@ -30,18 +30,42 @@ main () {
     # don't include __main__.py # => python package
     if [[ $i == *.py ]] && [[ $i != "__main__.py" ]]; then
 
-        # convert all .py files to .so binary 
-        python3 -m nuitka --module --no-progress --quiet --remove-output --nofollow-imports --no-pyi-file $i &> /dev/null   
+        # demojize all filenames containing emoji
+        g=$(python -c "import emoji; print(emoji.demojize('${i}'))")
 
-        rm -rf $i        
+        # rename the files
+        mv $i $g  &> /dev/null # ignore errors
+
+        # convert all .py files to .so binary 
+        python3 -m nuitka --module --no-progress --quiet --remove-output --nofollow-imports --no-pyi-file $i &> /dev/null    
+        
+        # remove the .py files
+        rm -rf $i
 
     fi
+
+ done
+ 
+ # iter through all directories and subdirectories
+ for z in $(find . -type f); do
+
+     # only match .so files
+     if [[ $z == *.so ]]; then
+        
+        # emojize all filenames containing emoji
+        g=$(python -c "import emoji; print(emoji.emojize('${z}'))")
+
+        # rename the files
+        mv $i $g  &> /dev/null # ignore errors
+
+     fi    
 
  done 
  
  # This will give __main__.bin
  # We can execute directly with ./__main__.bin
  python3 -m nuitka --no-progress --quiet --remove-output --nofollow-imports __main__.py
+ rm -rf __main__.py
 
 }
 
