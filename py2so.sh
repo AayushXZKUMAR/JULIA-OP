@@ -27,16 +27,21 @@ main () {
  for i in $(find . -type f); do
 
     # only match python files
-    if [[ $i == *.py ]]; then
+    # don't include __main__.py # => python package
+    if [[ $i == *.py ]] && [[ $i != "__main__.py" ]]; then
 
         # convert all .py files to .so binary 
-        python3 -m nuitka --module --no-progress --quiet --remove-output --nofollow-imports --no-pyi-file $i    
+        python3 -m nuitka --module --no-progress --quiet --remove-output --nofollow-imports --no-pyi-file $i &> /dev/null   
 
         rm -rf $i        
 
     fi
 
- done
+ done 
+ 
+ # This will give __main__.bin
+ # We can execute directly with ./__main__.bin
+ python3 -m nuitka --no-progress --quiet --remove-output --nofollow-imports __main__.py
 
 }
 
