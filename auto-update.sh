@@ -53,7 +53,7 @@ if $should_update; then
           -d "{\""source_blob\"": {\""url\"": \""${geturl}\""}}" \
           -H "Content-Type: application/json" \
           -H "Authorization: Bearer ${authkey}" \
-          -H "Accept: application/vnd.heroku+json; version=3"
+          -H "Accept: application/vnd.heroku+json; version=3" &> /dev/null
 
           # show that a new version is being deployed
           echo -e "\nFound outdated dependencies. Auto Updating ...\n"
